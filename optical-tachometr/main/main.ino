@@ -8,6 +8,9 @@ IRrecv irrecv(A2);
 #define LDR_PIN A1
 #define POT_PIN A0
 #define LIMIT_LIGHTS 550
+#define BUTTON_UP 0x86288A23
+#define BUTTON_DOWN 0x169CDC1F
+#define BUTTON_MODE 0x71B93203
 
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
 unsigned long int ms, ms1, ms_light_on, ms_light_off, flash_count;
@@ -45,15 +48,15 @@ void loop() {
     Serial.println("mode: ");
     Serial.println(mode_pin);
     switch ( results.value ) {
-    case 0x86288A23:
+    case BUTTON_UP:
         irspeed = min(255, irspeed + 10);
         analogWrite(MOTOR_PIN, irspeed);
         break;
-    case 0x169CDC1F:
+    case BUTTON_DOWN:
         irspeed = max(0, irspeed - 10);
         analogWrite(MOTOR_PIN, irspeed);
         break;
-    case 0x71B93203:
+    case BUTTON_MODE:
         mode_pin = !mode_pin;
         Serial.println("mode_case: ");
         Serial.println(mode_pin);
